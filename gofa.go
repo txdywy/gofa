@@ -24,8 +24,8 @@ func main() {
 	fmt.Println(id, num)
 	done := make(chan bool, num)
 	for i := 0; i < num; i++ {
-		//go geti(id, done)
-		go ti(id, done)
+		go geti(id, done)
+		//go ti(id, done)
 	}
 	for i := 0; i < num; i++ {
 	    <-done
@@ -57,19 +57,19 @@ func geti(id int, done chan bool) {
 	//url = "http://wtfismyip.com/text"
 	fmt.Println(url)
     request := gorequest.New()
-	resp, body, errs := request.Get(url).
+	_, body, errs := request.Get(url).
 		Set("X-Requested-With", "XMLHttpRequest").
 		Set("Referer", "http://events.chncpa.org/wmx2016/mobile/pages/jmpx.php").
 		Set("User-Agent", "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405").
 		End()
 	if errs != nil {
-		log.Fatal(errs)
-        log.Fatal("error")
-		log.Fatal(body)
-		log.Fatal(resp)
-		return
+		//log.Fatal(errs)
+        //log.Fatal("error")
+		//log.Fatal(body)
+		//log.Fatal(resp)
+		fmt.Printf("[%s] %s", url, errs)
 	} else {
-		fmt.Println(body)
+		fmt.Println(string(body)[:50])
 	}
 	
 	done <- true
